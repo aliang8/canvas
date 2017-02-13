@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Canvas!</title>
+  </heaD>
+  <body>
+    <canvas height="500" width="500" id="box" style="border:2px solid #000000;">
+    </canvas>
+    <button id="clean" name="clean">Clean!</button>
+    <script>
+      var c = document.getElementById("box");
+      var ctx = c.getContext("2d");
+      
+      //get the position of click
+      function getMousePos(c, e) {
+        var rect = c.getBoundingClientRect();
+        return {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+      };
+      
+      //make a box
+      function makeBox(x, y, width, height){
+        ctx.fillStyle = "rgb("+
+          Math.floor(Math.random()*256)+","+
+          Math.floor(Math.random()*256)+","+
+          Math.floor(Math.random()*256)+")";
+        ctx.fillRect(x,y,width,height);
+      };
+
+      //add an eventlistener to canvas
+      c.addEventListener('click', function(e){
+        var mousePos = getMousePos(c, e);
+        makeBox(mousePos.x - 25, mousePos.y - 25, 50, 50);
+      }, false);
+
+      //clean button
+      var b = document.getElementById("clean");
+      b.addEventListener('click', function(e){
+        ctx.clearRect(0, 0, c.width, c.height);
+      });
+
+    </script>
+  </body>
+</html>
