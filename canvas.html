@@ -10,6 +10,8 @@
     <script>
       var c = document.getElementById("box");
       var ctx = c.getContext("2d");
+      ctx.beginPath();
+      var started = 0;
       
       //get the position of click
       function getMousePos(c, e) {
@@ -29,10 +31,29 @@
         ctx.fillRect(x,y,width,height);
       };
 
+      //draws a dot
+      function makeDot(x, y, r){
+        if (started == 1) {
+          ctx.lineTo(x, y);
+        } else {
+          started = 1;
+        }
+        ctx.moveTo(x + 15,y);
+        ctx.arc(x,y,r,0,2 * Math.PI);
+        ctx.moveTo(x,y);
+        ctx.fillStyle = "rgb("+
+          Math.floor(Math.random()*256)+","+
+          Math.floor(Math.random()*256)+","+
+          Math.floor(Math.random()*256)+")";
+        ctx.fill();
+        ctx.stroke();
+      };
+
       //add an eventlistener to canvas
       c.addEventListener('click', function(e){
         var mousePos = getMousePos(c, e);
-        makeBox(mousePos.x - 25, mousePos.y - 25, 50, 50);
+        //makeBox(mousePos.x - 25, mousePos.y - 25, 50, 50);
+        makeDot(mousePos.x, mousePos.y, 15);
       }, false);
 
       //clean button
